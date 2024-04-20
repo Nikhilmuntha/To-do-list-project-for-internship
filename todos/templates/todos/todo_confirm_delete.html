@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Todo</title>
+</head>
+<body>
+    <h1>Delete Todo</h1>
+    <p>Are you sure you want to delete "{{ todo.title }}"?</p>
+    <form action="{% url 'todo_delete' todo.pk %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+    </form>
+    <a href="{% url 'todo_detail' todo.pk %}">Cancel</a>
+</body>
+</html>

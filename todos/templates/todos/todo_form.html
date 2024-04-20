@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if form.instance.pk %}Edit Todo{% else %}New Todo{% endif %}</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Edit Todo{% else %}New Todo{% endif %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        <br>
+        {{ form.description.label_tag }}
+        {{ form.description }}
+        <br>
+        {{ form.time.label_tag }}
+        {{ form.time }}
+        <br>
+        {% if request.user.prolicense.is_pro %}
+            {{ form.image.label_tag }}
+            {{ form.image }}
+            <br>
+        {% else %}
+            <!-- Display a message indicating that image uploads are only available for Pro users -->
+            <p>Image uploads are only available for Pro users. <a href="{% url 'buy_pro_license' %}">Upgrade now!</a></p>
+        {% endif %}
+        {{ form.completed }} {{ form.completed.label_tag }}
+        <br>
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>

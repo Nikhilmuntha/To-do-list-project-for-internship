@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GraphiQL</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        width: 100%;
+      }
+      #graphiql {
+        height: 100vh;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/1.0.3/graphiql.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.0.5/es6-promise.auto.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.6.3/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.6.3/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/1.0.3/graphiql.min.js"></script>
+  </head>
+  <body>
+    <div id="graphiql">Loading...</div>
+    <script>
+      function fetcher(params) {
+        return fetch(window.location.origin + "/graphql/", {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(params),
+          credentials: "include",
+        }).then(function (response) {
+          return response.json().catch(function () {
+            return response.text();
+          });
+        });
+      }
+
+      ReactDOM.render(
+        React.createElement(GraphiQL, { fetcher: fetcher }),
+        document.getElementById("graphiql")
+      );
+    </script>
+  </body>
+</html>
